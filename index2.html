@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bre's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Soft Neutrals with Added Accents */
+        :root {
+            --light-cream: #F8F5F2;
+            --muted-blue-grey: #A3B3C4;
+            --soft-walnut-brown: #8C756A;
+            --subtle-green-grey: #B5C4B1;
+            --coral-accent: #E8A87C;
+            --deep-teal: #55828B;
+            --text-color: #3E3E3E;
+            --box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset & General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: var(--light-cream);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Layout - Fixed the container structure */
+        .page-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: var(--subtle-green-grey);
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+            z-index: 10;
+        }
+
+        /* Profile Picture */
+        .profile-pic {
+            width: 175px;
+            height: 175px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--soft-walnut-brown);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            border-color: var(--coral-accent);
+        }
+
+        /* Sidebar Navigation */
+        .side-nav {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--deep-teal);
+            padding: 12px 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .side-nav a i {
+            font-size: 20px;
+            color: var(--soft-walnut-brown);
+            transition: color 0.3s ease;
+            width: 25px;
+            text-align: center;
+        }
+
+        .side-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .side-nav a:hover i {
+            color: var(--deep-teal);
+        }
+
+        /* Main Content Area - Fixed the margin issue */
+        .content-wrapper {
+            flex: 1;
+            margin-left: 250px;
+            padding: 40px;
+        }
+
+        /* Navigation Menu */
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 15px 0;
+            margin-bottom: 50px;
+        }
+
+        .top-nav a {
+            text-decoration: none;
+            color: var(--soft-walnut-brown);
+            margin-left: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .top-nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--deep-teal);
+            transition: width 0.3s ease;
+        }
+
+        .top-nav a:hover {
+            color: var(--deep-teal);
+        }
+
+        .top-nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 60px;
+        }
+
+        /* Intro Section */
+        .intro {
+            text-align: center;
+            background: linear-gradient(135deg, var(--light-cream), #E8DED1);
+            border-radius: 12px;
+            padding: 70px 50px;
+            margin-bottom: 70px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .intro h1 {
+            font-size: 3.5rem;
+            color: var(--deep-teal);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .intro p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-color);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* New Sections Added */
+        .section-title {
+            font-size: 2rem;
+            color: var(--deep-teal);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--coral-accent);
+            display: inline-block;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 180px;
+            background-color: var(--muted-blue-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-content h3 {
+            color: var(--deep-teal);
+            margin-bottom: 10px;
+        }
+
+        .project-links {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-links a {
+            color: var(--soft-walnut-brown);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .project-links a:hover {
+            color: var(--coral-accent);
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background-color: var(--muted-blue-grey);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: scale(1.05);
+            background-color: var(--deep-teal);
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .about-text {
+            flex: 2;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--deep-teal);
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--muted-blue-grey);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--deep-teal);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--soft-walnut-brown);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 20px;
+            border-top: 1px solid var(--muted-blue-grey);
+            color: var(--soft-walnut-brown);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--deep-teal);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Responsive Design - Improved */
+        @media (max-width: 900px) {
+            .page-container {
+                flex-direction: column;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                padding: 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .content-wrapper {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .side-nav {
+                margin-top: 30px;
+            }
+
+            .top-nav {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .top-nav a {
+                margin: 0 10px 10px;
+            }
+
+            .intro {
+                padding: 40px 20px;
+            }
+
+            .intro h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* For screens smaller than 600px */
+        @media (max-width: 600px) {
+            .intro h1 {
+                font-size: 2rem;
+            }
+
+            .intro p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="page-container">
+        <!-- Sidebar with Photo & Social Links -->
+        <aside class="sidebar" id="sidebar">
+            <img src="photos/bre-2025.jpg" alt="Bre's Photo" class="profile-pic">
+            <h2 style="color: var(--deep-teal); margin-bottom: 10px;">Bre Acosta</h2>
+            <p style="color: var(--soft-walnut-brown); margin-bottom: 20px; text-align: center;">Aspiring Full-Stack Developer</p>
+            
+            <nav class="side-nav">
+                <a href="#about"><i class="fa-solid fa-user"></i> About Me</a>
+                <a href="#learning"><i class="fa-solid fa-graduation-cap"></i> Learning Journey</a>
+                <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+                <a href="https://github.com/Bre-Acosta" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/bre-acosta/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="https://x.com/Bre__Acosta" target="_blank"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <!-- Top Navigation -->
+            <nav class="top-nav">
+                <a href="#about">About</a>
+                <a href="#learning">Learning Journey</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <!-- Introduction -->
+            <section class="intro">
+                <h1>Hi, I'm Bre.</h1>
+                <p>I enjoy learning, problem-solving, and automation. My goal is to become a full-stack developer, starting with front-end and eventually moving into back-end.</p>
+            </section>
+
+            <!-- About Section -->
+            <section id="about">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>My interest in tech and web development started a few years ago out of simple curiosity about how the apps I used actually worked. When I began taking on more technical tasks at work, I found I actually enjoy fixing problems, streamlining processes, and building workflows that make sense.</p>
+                        <br>
+                        <p>As lame as it sounds, I got genuinely excited the first time I managed to make a title appear or turn text blue with code. That was it—I was hooked. Now I'm serious about learning web development and spending as much time as I can mastering it.</p>
+                        <br>
+                        <p>I'm currently in the early stages of my web development journey, focusing on building a strong foundation in HTML and CSS.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Learning Journey Section -->
+            <section id="learning">
+                <h2 class="section-title">My Learning Journey</h2>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--deep-teal); margin-bottom: 15px;">Current Skills</h3>
+                    <div class="skills-container">
+                        <div class="skill-tag"><i class="fab fa-html5 fa-sm" style="margin-right: 5px;"></i> HTML5</div>
+                        <div class="skill-tag"><i class="fab fa-css3-alt fa-sm" style="margin-right: 5px;"></i> CSS3</div>
+                        <div class="skill-tag"><i class="fas fa-code fa-sm" style="margin-right: 5px;"></i> VS Code</div>
+                        <div class="skill-tag"><i class="fas fa-mobile-alt fa-sm" style="margin-right: 5px;"></i> Responsive Design</div>
+                    </div>
+                </div>
+
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3 style="color: var(--deep-teal); margin-bottom: 10px;">Current Focus</h3>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check-circle" style="color: var(--coral-accent); margin-right: 8px;"></i> Mastering responsive design principles</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check-circle" style="color: var(--coral-accent); margin-right: 8px;"></i> Learning CSS Grid and Flexbox layouts</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-check-circle" style="color: var(--coral-accent); margin-right: 8px;"></i> Building this portfolio site from scratch</li>
+                        </ul>
+                        <br>
+                        <h3 style="color: var(--deep-teal); margin-bottom: 10px;">Future Learning Goals</h3>
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            <li style="margin-bottom: 12px;"><i class="fas fa-arrow-right" style="color: var(--soft-walnut-brown); margin-right: 8px;"></i> JavaScript fundamentals</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-arrow-right" style="color: var(--soft-walnut-brown); margin-right: 8px;"></i> Working with APIs</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-arrow-right" style="color: var(--soft-walnut-brown); margin-right: 8px;"></i> JavaScript frameworks (React.js)</li>
+                            <li style="margin-bottom: 12px;"><i class="fas fa-arrow-right" style="color: var(--soft-walnut-brown); margin-right: 8px;"></i> Backend development basics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="color: var(--deep-teal); margin-bottom: 15px;">My Learning Path</h3>
+                    <div class="projects-grid">
+                        <!-- Resource 1 -->
+                        <div class="project-card">
+                            <div class="project-image" style="background-color: var(--deep-teal);">
+                                <i class="fas fa-graduation-cap fa-2x"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>NuCamp</h3>
+                                <p>Currently completing NuCamp's Web Development Fundamentals course to build a strong foundation in HTML, CSS, and Bootstrap.</p>
+                            </div>
+                        </div>
+                
+                        <!-- Resource 2 -->
+                        <div class="project-card">
+                            <div class="project-image" style="background-color: var(--soft-walnut-brown);">
+                                <i class="fas fa-laptop-code fa-2x"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>FreeCodeCamp</h3>
+                                <p>Working through the Responsive Web Design certification to master responsive design principles.</p>
+                            </div>
+                        </div>
+                
+                        <!-- Resource 3 -->
+                        <div class="project-card">
+                            <div class="project-image" style="background-color: var(--coral-accent);">
+                                <i class="fas fa-user-friends fa-2x"></i>
+                            </div>
+                            <div class="project-content">
+                                <h3>Mentorship</h3>
+                                <p>Learning with guidance from Dylan, my mentor from MentorCruise, to accelerate my learning with personalized support.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact">
+                <h2 class="section-title">Get In Touch</h2>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer>
+                <p>&copy; 2025 Bre Acosta. All Rights Reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked on mobile
+        if (window.innerWidth <= 900) {
+            document.querySelectorAll('.side-nav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.getElementById('sidebar').classList.remove('active');
+                });
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 50,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
